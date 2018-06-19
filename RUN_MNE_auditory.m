@@ -2,7 +2,7 @@ function [A_mean, J_mean, h_mean, V, D, MNE_params, eigenvalues_sorted] = RUN_MN
 %% Add Functions folder to search path
 addpath(genpath('UROP/Functions')); 
 addpath(genpath('freq_shifted_song')); 
-clc; close all; 
+clc; 
 
 %% MNE parameters setup
 MNE_params.Ndim = 16; %number of frequency bands in STRF 

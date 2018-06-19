@@ -11,6 +11,7 @@ stimpath = 'freq_shifted_song/stimulus';
 stimfile = strrep(stimfile, '.wav', '');
 figname = strrep(sprintf('subj:%s  site:%s  sort1:%s  stim:%s', ...
     subjectID,site,sort1,stimfile), '_', '\_');
+figure;
 
 %% generate the raster
 ax(1) = subplot(3,1,1);
@@ -25,8 +26,8 @@ hold;
 xmin=start;xmax=stop;
 ymin=0;ymax=nreps+1;
 axis([xmin xmax ymin ymax]);
-set(ax(1), 'FontSize', 20);
-ylabel('Rep');
+set(ax(1), 'FontSize', 18);
+ylabel('Rep', 'FontSize', 20);
 
 % ax_pos = get(ax(1), 'Position');
 set(ax(1),'XTickLabel', '');
@@ -34,7 +35,7 @@ set(ax(1),'XTickLabel', '');
 
 %% generate histogram
 ax(2) = subplot(3,1,2);
-set(ax(2), 'FontSize', 20);
+set(ax(2), 'FontSize', 36);
 ax2_pos = get(ax(1), 'Position');
 ax2_pos(2)= ax2_pos(2)-ax2_pos(4);
 set(ax(2), 'Position',ax2_pos); 
@@ -82,7 +83,7 @@ plot(xbins, psth,'LineWidth',2);
 % end
 
 axis([xmin xmax ymin ymax]);
-ylabel('Spikes probability');
+ylabel('Spikes', 'FontSize', 20);
 set(ax(2),'XTickLabel', '');
 ylim([0 1]);
 
@@ -92,7 +93,7 @@ psth = psth(1:end-1, 1);
 ax(3) = subplot(3,1,3);
 ax3_pos = get(ax(3), 'Position');
 ax3_pos(4)= ax2_pos(2)-ax3_pos(2);
-set(ax(3), 'FontSize', 20);
+set(ax(3), 'FontSize', 36);
 set(ax(3), 'Position',ax3_pos);
 
 fullstim = [stimpath '/' stimfile '.wav' ];
@@ -133,8 +134,8 @@ axis xy;
 colormap(colormap(jet(256)));
 
 axis([xmin xmax 0 15000]); %11025
-xlabel('Time(sec)');
-ylabel('Freq (Hz)');
+xlabel('Time(sec)', 'FontSize', 20);
+ylabel('Freq (Hz)', 'FontSize', 20);
 
 set(gcf, 'Color', [1 1 1]);
 %set(gcf, 'Position', [360 635 883 286]);

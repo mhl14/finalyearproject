@@ -1,18 +1,19 @@
 function [stimulus_compressed, response_compressed, response_compressed_nor, Nsamples_compressed, respNsamples_compressed, Ndim_compressed]=compression(stimulus, response, freq_compress, time_compress)
 %% clear data
-clc; close all; 
+clc; 
 
-%% Reshape and compress spectrogram of stimuli
-% stimulus = spec1(1:end, 1:end); %sometimes for slow songs, spec(1:end, 1:61953);
-[Ndim, Nsamples]=size(stimulus); 
+%% 
+[Ndim, Nsamples]=size(stimulus);
 for i=1:Ndim
     for j=1:Nsamples
-        if isnan(stimulus(i,j))
-            stimulus(i,j)=0;
+        if stimulus(i,j)== -Inf 
+            stimulus(i,j)=0; 
         end
     end
 end
 
+%% Reshape and compress spectrogram of stimuli
+% stimulus = spec1(1:end, 1:end); %sometimes for slow songs, spec(1:end, 1:61953); 
 stimulus = stimulus-repmat(mean(stimulus,2),[1, Nsamples]);
 stimulus = stimulus./repmat(std(stimulus,0,2),[1, Nsamples]);
 % freq_compress = 4; %decrease compression for lower freq song

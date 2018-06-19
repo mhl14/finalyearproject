@@ -15,20 +15,20 @@ J= reshape(J_mean,Ndim,Ndim);
 
 %% Load and prepare spectrogram of testing stimulus
 toelist = ...
-    'response/concat_chan_23_24_electrode_7_4/10 reps/ss001m_497_17_s1_toe.txt';
+    'response/concat_chan_17_18_electrode_5_12/10 reps/ss001m_497_17_s1_toe.txt';
 start = 0; 
 stop = 60; %30 for fast, 60 for normal, 90 for slow
-step = 0.0194363;
+step = 0.194363/2;
 nfft = 128;
-window = 1224;
+window = 12240/2;
 overlap = 0.3;
-[ax, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
+[~, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
 freq_compress = 4;
 time_compress = 1; %5.74 for fast, 11.5 for normal, 17.2 for slow
-[tstimulus, tresponse, tresponse_nor, Nsample, respNsample, tNdim]=compression(spec, psth', freq_compress, time_compress); 
+[tstimulus, tresponse, tresponse_nor, Nsample, ~, tNdim]=compression(spec, psth', freq_compress, time_compress); 
 
 %% Fit MNE model with trained parameters to get testing results 
-[Tdim, Tsample]=size(tresponse);
+[~, Tsample]=size(tresponse);
 
 tNsamples_compressed = Nsample - (Nlags-1); 
 tNdimtotal = tNdim*Nlags;
@@ -55,12 +55,6 @@ axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
 xlabel('time bins'); ylabel('number of spikes');
 title('real sampled and tested spike response');
 
-% subplot(3,1,3); hold on
-% plot(tresponse(:,Nlags:end),'r'); plot(pSpike,'b'); 
-% axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
-% xlabel('time bins'); ylabel('number of spikes');
-% title('real sampled and tested spike response');
-
 %% convolution of both data
 % convcoef = corrcoef(tresponse(:,Nlags:end), pSpike')
 convcoef_nor1 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor')
@@ -68,14 +62,14 @@ convcoef_nor1 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor')
 
 %% Load and prepare spectrogram of testing stimulus
 toelist = ...
-    'response/concat_chan_23_24_electrode_7_4/30 reps/ss001m_497_17_s1_2fast_toe.txt';
+    'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_2fast_toe.txt';
 stop = 30; %30 for fast, 60 for normal, 90 for slow
-[ax, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
+[~, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
 time_compress = 0.5; %5.74 for fast, 11.5 for normal, 17.2 for slow
-[tstimulus, tresponse, tresponse_nor, Nsample, respNsample, tNdim]=compression(spec, psth', freq_compress, time_compress); 
+[tstimulus, tresponse, tresponse_nor, Nsample, ~, tNdim]=compression(spec, psth', freq_compress, time_compress); 
 
 %% Fit MNE model with trained parameters to get testing results 
-[Tdim, Tsample]=size(tresponse);
+[~, Tsample]=size(tresponse);
 
 tNsamples_compressed = Nsample - (Nlags-1); 
 tNdimtotal = tNdim*Nlags;
@@ -102,12 +96,6 @@ axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
 xlabel('time bins'); ylabel('number of spikes');
 title('real sampled and tested spike response');
 
-% subplot(3,1,3); hold on
-% plot(tresponse(:,Nlags:end),'r'); plot(pSpike,'b'); 
-% axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
-% xlabel('time bins'); ylabel('number of spikes');
-% title('real sampled and tested spike response');
-
 %% convolution of both data
 % convcoef = corrcoef(tresponse(:,Nlags:end), pSpike')
 convcoef_nor2 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor2')
@@ -115,14 +103,14 @@ convcoef_nor2 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor2')
 
 %% Load and prepare spectrogram of testing stimulus
 toelist = ...
-    'response/concat_chan_23_24_electrode_7_4/30 reps/ss001m_497_17_s1_shift_1_toe.txt';
+    'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_1_toe.txt';
 stop = 60; %30 for fast, 60 for normal, 90 for slow
-[ax, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
+[~, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
 time_compress = 1; %5.74 for fast, 11.5 for normal, 17.2 for slow
-[tstimulus, tresponse, tresponse_nor, Nsample, respNsample, tNdim]=compression(spec, psth', freq_compress, time_compress); 
+[tstimulus, tresponse, tresponse_nor, Nsample, ~, tNdim]=compression(spec, psth', freq_compress, time_compress); 
 
 %% Fit MNE model with trained parameters to get testing results 
-[Tdim, Tsample]=size(tresponse);
+[~, Tsample]=size(tresponse);
 
 tNsamples_compressed = Nsample - (Nlags-1); 
 tNdimtotal = tNdim*Nlags;
@@ -149,12 +137,6 @@ axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
 xlabel('time bins'); ylabel('number of spikes');
 title('real sampled and tested spike response');
 
-% subplot(3,1,3); hold on
-% plot(tresponse(:,Nlags:end),'r'); plot(pSpike,'b'); 
-% axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
-% xlabel('time bins'); ylabel('number of spikes');
-% title('real sampled and tested spike response');
-
 %% convolution of both data
 % convcoef = corrcoef(tresponse(:,Nlags:end), pSpike')
 convcoef_nor3 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor3')
@@ -162,13 +144,13 @@ convcoef_nor3 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor3')
 
 %% Load and prepare spectrogram of testing stimulus
 toelist = ...
-    'response/concat_chan_23_24_electrode_7_4/30 reps/ss001m_497_17_s1_shift_6_toe.txt';
+    'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_6_toe.txt';
 stop = 60; %30 for fast, 60 for normal, 90 for slow
-[ax, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
-[tstimulus, tresponse, tresponse_nor, Nsample, respNsample, tNdim]=compression(spec, psth', freq_compress, time_compress); 
+[~, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
+[tstimulus, tresponse, tresponse_nor, Nsample, ~, tNdim]=compression(spec, psth', freq_compress, time_compress); 
 
 %% Fit MNE model with trained parameters to get testing results 
-[Tdim, Tsample]=size(tresponse);
+[~, Tsample]=size(tresponse);
 
 tNsamples_compressed = Nsample - (Nlags-1); 
 tNdimtotal = tNdim*Nlags;
@@ -195,20 +177,14 @@ axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
 xlabel('time bins'); ylabel('number of spikes');
 title('real sampled and tested spike response');
 
-% subplot(3,1,3); hold on
-% plot(tresponse(:,Nlags:end),'r'); plot(pSpike,'b'); 
-% axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
-% xlabel('time bins'); ylabel('number of spikes');
-% title('real sampled and tested spike response');
-
 %% convolution of both data
 % convcoef = corrcoef(tresponse(:,Nlags:end), pSpike')
-convcoef_nor4 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor3')
+convcoef_nor4 = corrcoef(tresponse_nor(:,Nlags:end), pSpike_nor4')
 [self_conv4] = self_cc(toelist, stop, step)
 
 %% Load and prepare spectrogram of testing stimulus
 toelist = ...
-    'response/concat_chan_23_24_electrode_7_4/30 reps/ss001m_497_17_s1_slow_toe.txt';
+    'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_slow_toe.txt';
 stop = 90; %30 for fast, 60 for normal, 90 for slow
 [ax, psth, spec]= plot_raster_SMI2(toelist, start, stop, step, nfft, window, overlap);
 time_compress = 2; %5.74 for fast, 11.5 for normal, 17.2 for slow
@@ -241,12 +217,6 @@ plot(tresponse_nor(:,Nlags:end),'r'); plot(pSpike_nor5,'b');
 axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
 xlabel('time bins'); ylabel('number of spikes');
 title('real sampled and tested spike response');
-
-% subplot(3,1,3); hold on
-% plot(tresponse(:,Nlags:end),'r'); plot(pSpike,'b'); 
-% axis([0 Tsample 0 1]); legend('real spike', 'estimated spike');
-% xlabel('time bins'); ylabel('number of spikes');
-% title('real sampled and tested spike response');
 
 %% convolution of both data
 % convcoef = corrcoef(tresponse(:,Nlags:end), pSpike')
