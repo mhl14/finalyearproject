@@ -519,7 +519,7 @@ subplot(2,2,4)
 hold on
 corre_coef = [corre_coef18_20; corre_coef5_12; corre_coef7_4; corre_coef8_3];
 for i=1:4
-    scatter(corre_coef(i,5),corre_coef(i,1));
+        (corre_coef(i,5),corre_coef(i,1));
 end
 xlabel('slow-warped','FontSize',20);
 ylabel('normal speed','FontSize',20)
@@ -562,13 +562,13 @@ overlap = 0.3;
 freq_compress = 4;
 corre_coef = zeros(11,5);
 self_coef = zeros(11,5);
-% step = 0.0194363:(0.194363/2-0.0194363)/10:0.194363/2;
+step = 0.0194363:(0.194363/2-0.0194363)/10:0.194363/2;
 
 toelist = ...
-    'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_slow_toe.txt';
-stop = 90; %30 for fast, 60 for normal, 90 for slow
+    'response/concat_chan_17_18_electrode_5_12/10 reps/ss001m_497_17_s1_toe.txt';
+stop = 60; %30 for fast, 60 for normal, 90 for slow
 [~, psth, spec]= plot_raster_SMI2(toelist, start, stop, step(1,t), nfft, window, overlap);
-time_compress = 2; %5.74 for fast, 11.5 for normal, 17.2 for slow
+time_compress = 1; %5.74 for fast, 11.5 for normal, 17.2 for slow
 [tstimulus, tresponse, tresponse_nor, ~, Nsample, tNdim]=compression(spec, psth', freq_compress, time_compress); 
 close all 
 % tresponse = tresponse'; 
@@ -601,7 +601,7 @@ title('Real Sampled and Predicted Spike Response Binned at 97.2ms', 'FontSize', 
 
 %% discussion 3 spectrogram plot
 % normal speed 
-subplot(2,4,2:3)
+subplot(3,4,2:3)
 nfft = 128;
 window = 1224;
 overlap = 0.3;
@@ -632,16 +632,16 @@ axis xy;
 colormap(colormap(jet(256)));
 
 axis([xmin xmax 0 22050]); %11025
-xlabel('Time(sec)', 'FontSize', 20);
-ylabel('Freq (Hz)','FontSize', 20);
-title('Normal Speed','FontSize', 24);
+xlabel('Time(sec)', 'FontSize', 16);
+ylabel('Freq (Hz)','FontSize', 16);
+title('Normal Speed','FontSize', 20);
 
 % fast-warped
-subplot(2,4,5:6)
-xmax=60;
+subplot(3,4,5:6)
+xmax=30;
 stimpath = 'freq_shifted_song/stimulus';
-% stimulus2 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_2fast_toe.txt';
-stimulus2 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_1_toe.txt';
+stimulus2 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_2fast_toe.txt';
+% stimulus2 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_1_toe.txt';
 nlap = round(window*overlap);
 [stimfile, subjectID, ~, site, sort1, ~, nreps, ...
     nspikes, toes, alltoes,~] = readtoe_2(stimulus2);
@@ -665,17 +665,17 @@ axis xy;
 colormap(colormap(jet(256)));
 
 axis([xmin xmax 0 22050]); %11025
-xlabel('Time(sec)','FontSize', 20);
-ylabel('Freq (Hz)','FontSize', 20);
-title('20% Shifted Up in Frequency','FontSize', 24);
-% title('Fast-Warped','FontSize', 24);
+xlabel('Time(sec)','FontSize', 16);
+ylabel('Freq (Hz)','FontSize', 16);
+% title('20% Shifted Up in Frequency','FontSize', 20);
+title('Fast-Warped','FontSize', 20);
 
 % %% slow-warped
-subplot(2,4,7:8)
-xmax=60;
+subplot(3,4,7:8)
+xmax=90;
 stimpath = 'freq_shifted_song/stimulus';
-% stimulus3 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_slow_toe.txt';
-stimulus3 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_6_toe.txt';
+stimulus3 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_slow_toe.txt';
+% stimulus3 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_6_toe.txt';
 nlap = round(window*overlap);
 [stimfile, subjectID, ~, site, sort1, ~, nreps, ...
     nspikes, toes, alltoes,~] = readtoe_2(stimulus3);
@@ -699,9 +699,77 @@ axis xy;
 colormap(colormap(jet(256)));
 
 axis([xmin xmax 0 22050]); %11025
-xlabel('Time(sec)','FontSize', 20);
-ylabel('Freq (Hz)','FontSize', 20);
-title('20% Shifted Down in Frequency','FontSize', 24);
+xlabel('Time(sec)','FontSize', 16);
+ylabel('Freq (Hz)','FontSize', 16);
+% title('20% Shifted Down in Frequency','FontSize', 20);
+title('Slow-Warped','FontSize', 20);
+
+% shifted up
+subplot(3,4,9:10)
+xmax=60;
+stimpath = 'freq_shifted_song/stimulus';
+% stimulus2 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_2fast_toe.txt';
+stimulus4 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_1_toe.txt';
+nlap = round(window*overlap);
+[stimfile, subjectID, ~, site, sort1, ~, nreps, ...
+    nspikes, toes, alltoes,~] = readtoe_2(stimulus4);
+stimfile = strrep(stimfile, '.wav', '');
+figname = strrep(sprintf('subj:%s  site:%s  sort1:%s  stim:%s', ...
+    subjectID,site,sort1,stimfile), '_', '\_');
+fullstim = [stimpath '/' stimfile '.wav' ];
+[Y,FS]=audioread(fullstim);
+[~,~,T,P] = spectrogram(Y,window,nlap,nfft,FS, 'yaxis');
+
+newT = xmin:((xmax-xmin)/length(T)):xmax;
+freqs=0:22050/(nfft):22050;
+if(length(newT)~=length(newT))
+    newT=newT(1:length(T));
+end
+clim = [-200  -65];
+spec = 20*log10(P);
+spec = spec(2:end, 1:end);
+imagesc(newT,freqs,spec,clim);  
+axis xy;
+colormap(colormap(jet(256)));
+
+axis([xmin xmax 0 22050]); %11025
+xlabel('Time(sec)','FontSize', 16);
+ylabel('Freq (Hz)','FontSize', 16);
+title('20% Shifted Up in Frequency','FontSize', 20);
+% title('Fast-Warped','FontSize', 24);
+
+% %% slow-warped
+subplot(3,4,11:12)
+xmax=60;
+stimpath = 'freq_shifted_song/stimulus';
+% stimulus3 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_slow_toe.txt';
+stimulus5 = 'response/concat_chan_17_18_electrode_5_12/30 reps/ss001m_497_17_s1_shift_6_toe.txt';
+nlap = round(window*overlap);
+[stimfile, subjectID, ~, site, sort1, ~, nreps, ...
+    nspikes, toes, alltoes,~] = readtoe_2(stimulus5);
+stimfile = strrep(stimfile, '.wav', '');
+figname = strrep(sprintf('subj:%s  site:%s  sort1:%s  stim:%s', ...
+    subjectID,site,sort1,stimfile), '_', '\_');
+fullstim = [stimpath '/' stimfile '.wav' ];
+[Y,FS]=audioread(fullstim);
+[~,~,T,P] = spectrogram(Y,window,nlap,nfft,FS, 'yaxis');
+
+newT = xmin:((xmax-xmin)/length(T)):xmax;
+freqs=0:22050/(nfft):22050;
+if(length(newT)~=length(newT))
+    newT=newT(1:length(T));
+end
+clim = [-200  -65];
+spec = 20*log10(P);
+spec = spec(2:end, 1:end);
+imagesc(newT,freqs,spec,clim);  
+axis xy;
+colormap(colormap(jet(256)));
+
+axis([xmin xmax 0 22050]); %11025
+xlabel('Time(sec)','FontSize', 16);
+ylabel('Freq (Hz)','FontSize', 16);
+title('20% Shifted Down in Frequency','FontSize', 20);
 % title('Slow-Warped','FontSize', 24);
 
 %% dissect spectrogram plot
@@ -797,7 +865,7 @@ plot(xbins(1,Nlags+1:end),tresponse_nor(:,Nlags:end),'r', 'lineWidth',3 );
 xbins2 = start:((stop-start)/length(pSpike_norMNE)):stop;
 plot(xbins2(1,2:end), pSpike_norMNE,'b', 'lineWidth',3 ); 
 xbins3 = start:((stop-start)/length(pSpike_norMNE)):stop;
-plot(xbins3(1,2:end), pSpike_norQC,'m', 'lineWidth',3 ); 
+plot(xbins3(1,2:end), pSpike_norQC,'g', 'lineWidth',3 ); 
 axis([start stop 0 1]);
 legend({'real spike', 'predicted spike by MNE','predicted spike by QC'}, 'FontSize', 16);
 xlabel('Time(sec)', 'FontSize', 28); ylabel('Spike probability', 'FontSize', 28);
