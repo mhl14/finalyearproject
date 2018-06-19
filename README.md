@@ -15,4 +15,6 @@ data_prep_normal.m - prepare spectrogram and spike repsonses input at normal spe
 invariance testing.m - do invariance testing per stimulus song    
 testing_loop.m - do iterative analysis to find the optimum window size for testing     
 testing_fshifted.m - do testing with frequency shifted testing songs    
-visualise_data.m & better_plot.m - plot experimental data     
+visualise_data.m & better_plot.m - plot experimental data       
+
+all other codes are backbone functions for the MNE model, and old algorithms provided by Dr Kozlov and Mr Lu. 
